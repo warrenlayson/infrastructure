@@ -14,10 +14,30 @@
             allowUnfree = true;
           };
         };
+        terraform = "${pkgs.terraform}/bin/terraform";
+        terraform-validate = pkgs.writeScriptBin "terraform-validate" ''#!/usr/bin/env bash
+                set -eux
+                for arg in "$@"; do
+                  dirname "$arg"
+                done | sort | uniq | while read dir; do
+                  ${terraform} -chdir="$dir" validate
+                done
+              '';
         pre-commit-check = pre-commit-hooks.lib.${system}.run {
           src = ./.;
           hooks = {
             nixpkgs-fmt.enable = true;
+            terraform-format = {
+              enable = true;
+              package = pkgs.terraform;
+              entry = "${terraform} fmt -recursive";
+            };
+            terraform-validate = {
+              enable = true;
+              package = terraform-validate;
+              entry = "${terraform-validate}/bin/terraform-validate";
+            };
+            tflint.enable = true;
           };
         };
       in
