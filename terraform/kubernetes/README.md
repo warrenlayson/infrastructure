@@ -13,7 +13,9 @@
 
 | Name | Version |
 |------|---------|
+| <a name="provider_flux"></a> [flux](#provider\_flux) | 1.5.1 |
 | <a name="provider_local"></a> [local](#provider\_local) | 2.5.2 |
+| <a name="provider_terraform"></a> [terraform](#provider\_terraform) | n/a |
 
 ## Modules
 
@@ -25,13 +27,18 @@
 
 | Name | Type |
 |------|------|
+| [flux_bootstrap_git.this](https://registry.terraform.io/providers/fluxcd/flux/1.5.1/docs/resources/bootstrap_git) | resource |
 | [local_file.kube_config](https://registry.terraform.io/providers/hashicorp/local/2.5.2/docs/resources/file) | resource |
 | [local_file.machine_configs](https://registry.terraform.io/providers/hashicorp/local/2.5.2/docs/resources/file) | resource |
 | [local_file.talos_config](https://registry.terraform.io/providers/hashicorp/local/2.5.2/docs/resources/file) | resource |
+| [terraform_remote_state.keypairs](https://registry.terraform.io/providers/hashicorp/terraform/latest/docs/data-sources/remote_state) | data source |
 
 ## Inputs
 
-No inputs.
+| Name | Description | Type | Default | Required |
+|------|-------------|------|---------|:--------:|
+| <a name="input_github_org"></a> [github\_org](#input\_github\_org) | GitHub organization | `string` | `"warrenlayson"` | no |
+| <a name="input_github_repository"></a> [github\_repository](#input\_github\_repository) | GitHub organization | `string` | `"infrastructure"` | no |
 
 ## Outputs
 

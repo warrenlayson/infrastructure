@@ -31,3 +31,9 @@ module "talos" {
     talos_version = "v1.10.0"
   }
 }
+
+resource "flux_bootstrap_git" "this" {
+  depends_on         = [module.talos]
+  embedded_manifests = true
+  path               = "clusters/homelab"
+}

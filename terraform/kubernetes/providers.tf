@@ -46,6 +46,10 @@ provider "flux" {
     cluster_ca_certificate = base64decode(module.talos.kube_config.kubernetes_client_configuration.ca_certificate)
   }
   git = {
-    url = "https://github.com"
+    url = "ssh://git@github.com/${var.github_org}/${var.github_repository}.git"
+    ssh = {
+      username    = "git"
+      private_key = data.terraform_remote_state.keypairs.outputs.flux_ssh_key.private_key_pem
+    }
   }
 }
