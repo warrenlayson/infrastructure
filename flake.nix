@@ -59,6 +59,14 @@
           inherit (pre-commit-check) shellHook;
           buildInputs = [
             pkgs.terraform
+            pkgs.kubectl
+            pkgs.talosctl
+            pkgs.fluxcd
+            (pkgs.wrapHelm pkgs.kubernetes-helm {
+              plugins = with pkgs.kubernetes-helmPlugins; [
+
+              ];
+            })
           ] ++ pre-commit-check.enabledPackages;
 
         };
