@@ -14,15 +14,10 @@
             allowUnfree = true;
           };
         };
+        custom-tools = import ./nix { inherit pkgs; };
+
         terraform = "${pkgs.terraform}/bin/terraform";
-        terraform-validate = pkgs.writeScriptBin "terraform-validate" ''#!/usr/bin/env bash
-                set -eux
-                for arg in "$@"; do
-                  dirname "$arg"
-                done | sort | uniq | while read dir; do
-                  ${terraform} -chdir="$dir" validate
-                done
-              '';
+        terraform-validate = custom-tools.terraform-validate;
         pre-commit-check = pre-commit-hooks.lib.${system}.run {
           src = ./.;
           hooks = {
