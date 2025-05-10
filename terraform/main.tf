@@ -1,13 +1,33 @@
-terraform {
-  required_version = ">= 0.13"
-  required_providers {
-    proxmox = {
-      source  = "Telmate/proxmox"
-      version = "3.0.1-rc8"
+
+module "talos" {
+  source = "./modules/talos"
+  providers = {
+    proxmox = proxmox
+    talos   = talos
+  }
+  nodes = {
+    "talos-00" = {
+      machine_type = "controlplane"
+      ip           = "192.168.0.200"
+      host_node    = "pve1"
+      vm_id        = 800
+      cpu          = 4
+      memory       = 1024 * 4
+    }
+    "work-00" = {
+      machine_type = "worker"
+      ip           = "192.168.0.210"
+      host_node    = "pve1"
+      vm_id        = 810
+      cpu          = 4
+      memory       = 1024 * 4
     }
   }
-}
 
-provider "proxmox" {
+  cluster = {
+    name          = "talos"
+    endpoint      = "192.168.0.200"
+    gateway       = "192.168.0.1"
+    talos_version = "v1.10.0"
+  }
 }
-  
