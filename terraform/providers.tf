@@ -9,6 +9,11 @@ terraform {
       source  = "siderolabs/talos"
       version = "0.8.0"
     }
+
+    flux = {
+      source  = "fluxcd/flux"
+      version = "1.5.1"
+    }
   }
 }
 
@@ -26,4 +31,16 @@ provider "proxmox" {
 
 provider "talos" {
 
+}
+
+provider "flux" {
+  kubernetes = {
+    host                   = module.talos.kube_config.kubernetes_client_configuration.host
+    client_certificate     = base64decode(module.talos.kube_config.kubernetes_client_configuration.client_certificate)
+    client_key             = base64decode(module.talos.kube_config.kubernetes_client_configuration.client_key)
+    cluster_ca_certificate = base64decode(module.talos.kube_config.kubernetes_client_configuration.ca_certificate)
+  }
+  git = {
+    url = "https://github.com"
+  }
 }

@@ -4,6 +4,7 @@
 | Name | Version |
 |------|---------|
 | <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 0.13 |
+| <a name="requirement_flux"></a> [flux](#requirement\_flux) | 1.5.1 |
 | <a name="requirement_proxmox"></a> [proxmox](#requirement\_proxmox) | 0.77.1 |
 | <a name="requirement_talos"></a> [talos](#requirement\_talos) | 0.8.0 |
 
