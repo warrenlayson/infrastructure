@@ -18,6 +18,8 @@
 
         terraform = "${pkgs.terraform}/bin/terraform";
         terraform-validate = custom-tools.terraform-validate;
+        terraform-docs = custom-tools.terraform-docs;
+
         pre-commit-check = pre-commit-hooks.lib.${system}.run {
           src = ./.;
           hooks = {
@@ -33,6 +35,19 @@
               entry = "${terraform-validate}/bin/terraform-validate";
             };
             tflint.enable = true;
+            terraform-docs = {
+              name = "terraform-docs";
+              description = "Generates documentation from Terraform modules in Markdown format";
+              enable = true;
+              package = terraform-docs;
+              entry = "${terraform-docs}/bin/terraform-docs";
+              files = "\\.tf$";
+              excludes = [ "\\.terraform/.*$" ];
+              require_serial = true;
+              language = "system";
+              stages = [ "pre-commit" ];
+            };
+
           };
         };
       in
