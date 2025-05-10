@@ -6,6 +6,6 @@ writeScriptBin "terraform-validate" ''
   for arg in "$@"; do
     dirname "$arg"
   done | sort | uniq | while read dir; do
-    ${terraform} -chdir="$dir" validate
+    ${terraform}/bin/terraform -chdir="$dir" validate
   done
 ''
