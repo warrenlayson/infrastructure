@@ -54,4 +54,8 @@ resource "proxmox_virtual_environment_vm" "this" {
   operating_system {
     type = "l26"
   }
+
+  lifecycle {
+    replace_triggered_by = [proxmox_virtual_environment_download_file.this]
+  }
 }

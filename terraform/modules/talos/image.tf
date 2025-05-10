@@ -9,14 +9,19 @@ data "talos_image_factory_extensions_versions" "this" {
   talos_version = local.version
   filters = {
     names = [
-      "qemu-guest-agent"
+      "qemu-guest-agent",
+      "iscsi-tools"
     ]
   }
 }
 
 resource "talos_image_factory_schematic" "this" {
-  schematic = templatefile("${path.module}/files/schematic.yml.tftpl", {
-    officialExtensions = data.talos_image_factory_extensions_versions.this.extensions_info.*.name
+  schematic = yamlencode({
+    customization = {
+      systemExtensions = {
+        officialExtensions = data.talos_image_factory_extensions_versions.this.extensions_info[*].name
+      }
+    }
   })
 }
 
