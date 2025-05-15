@@ -88,9 +88,9 @@ spec:
         # YOU MUST COPY THE DATA HERE INLINE!
         driver: freenas-iscsi
         httpConnection:
-            protocol: http
+            protocol: https
             host: truenas.local
-            port: 80ßß¡
+            port: 443
             apiKey: 1-znx8y4pqMFGZHGkikC9y7dsixIPwDx5UzWjG88DhELA8lDhJzb6ijxvuuOoa1Nj0
             allowInsecure: true
         zfs:
