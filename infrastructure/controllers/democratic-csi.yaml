@@ -89,7 +89,7 @@ spec:
         driver: freenas-iscsi
         httpConnection:
             protocol: https
-            host: truenas.local
+            host: 192.168.0.31
             port: 443
             apiKey: 1-znx8y4pqMFGZHGkikC9y7dsixIPwDx5UzWjG88DhELA8lDhJzb6ijxvuuOoa1Nj0
             allowInsecure: true
@@ -101,7 +101,7 @@ spec:
           zvolEnableReservation: false
           zvolBlocksize:
         iscsi:
-          targetPortal: "truenas.local:3260"
+          targetPortal: "192.168.0.31:3260"
           targetPortals: []
           interface:
           namePrefix: csi-
