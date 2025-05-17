@@ -29,49 +29,6 @@ spec:
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
-  name: traefik-external
-  namespace: traefik
-spec:
-  chartRef:
-    kind: HelmChart
-    name: traefik
-    namespace: traefik
-  interval: 30m
-  values:
-    additionalArguments:
-      - "--serversTransport.insecureSkipVerify=true"
-      - "--log.level=DEBUG"
-    ingressRoute:
-      dashboard:
-        enabled: false
-    ports:
-      web:
-        redirections:
-          entryPoint:
-            to: websecure
-            scheme: https
-            permanent: true
-      websecure:
-        tls:
-          enabled: true
-      rbac:
-        enabled: true
-      providers:
-        kubernetesCRD:
-          enabled: true
-          ingressClass: traefik-external
-        kubernetesIngress:
-          enabled: true
-          publishedService:
-            enabled: false
-      service:
-        enabled: true
-        type: LoadBalancer
-        loadBalancerIP: "192.168.0.81"
----
-apiVersion: helm.toolkit.fluxcd.io/v2
-kind: HelmRelease
-metadata:
   name: traefik-internal
   namespace: traefik
 spec:
@@ -80,34 +37,3 @@ spec:
     name: traefik
     namespace: traefik
   interval: 30m
-  values:
-    additionalArguments:
-      - "--serversTransport.insecureSkipVerify=true"
-      - "--log.level=DEBUG"
-    ingressRoute:
-      dashboard:
-        enabled: false
-    ports:
-      web:
-        redirections:
-          entryPoint:
-            to: websecure
-            scheme: https
-            permanent: true
-      websecure:
-        tls:
-          enabled: true
-      rbac:
-        enabled: true
-      providers:
-        kubernetesCRD:
-          enabled: true
-          ingressClass: traefik-internal
-        kubernetesIngress:
-          enabled: true
-          publishedService:
-            enabled: false
-      service:
-        enabled: true
-        type: LoadBalancer
-        loadBalancerIP: "192.168.0.80"
