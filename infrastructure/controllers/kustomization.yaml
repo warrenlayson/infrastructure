@@ -4,4 +4,4 @@ resources:
   - metallb.yaml
   - democratic-csi.yaml
   - cert-manager.yaml
-  - traefik.yaml
+  - traefik
