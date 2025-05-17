@@ -16,11 +16,29 @@ service:
       type: ClusterIP
       labels:
         traefik-service-label: internal
+      specs:
+        ports:
+          - port: 80
+            name: web
+            targetPort: web
+          - port: 443
+            name: websecure
+            targetPort: websecure
     lb:
       type: LoadBalancer
-      loadBalancerIP: "192.168.0.240"
       labels:
         traefik-service-label: internal
+      specs:
+        loadBalancerIP: "192.168.0.240"
+        ports:
+        - port: 80
+          name: web
+          targetPort: web
+        - port: 443
+          name: websecure
+          targetPort: websecure
+
+
 rbac:
   enabled: true
 
