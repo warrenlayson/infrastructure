@@ -9,32 +9,21 @@ providers:
       enabled: false
 service:
   enabled: true
+  single: true
   type: LoadBalancer
+  loadBalancerSourceRanger:
+    - 0.0.0.0/0
   additionalServices:
     cluster:
       type: ClusterIP
       labels:
         traefik-service-label: internal
-      specs:
-        ports:
-          - port: 80
-            name: web
-            targetPort: web
-          - port: 443
-            name: websecure
-            targetPort: websecure
-    lb:
+    internal:
       type: LoadBalancer
+      loadBalancerSourceRanges:
+        - 192.168.0.0/24
       labels:
         traefik-service-label: internal
-      specs:
-        ports:
-        - port: 80
-          name: web
-          targetPort: web
-        - port: 443
-          name: websecure
-          targetPort: websecure
 
 
 rbac:
@@ -48,13 +37,32 @@ ports:
   traefik:
     expose:
       default: false
+      cluster: true
       internal: true
   web:
+    expose:
+      default: true
     redirections:
       entryPoint:
         to: websecure
         scheme: https
         permanent: true
+  websecure:
+    expose:
+      default: true
+  private-web:
+    port: 8000
+    expose:
+      default: false
+      internal: true
+    exposedPort: 80
+  private-websecure:
+    port: 8443
+    expose:
+      default: false
+      internal: true
+    exposedPort: 443
+
 
 tlsStore:
   default:
