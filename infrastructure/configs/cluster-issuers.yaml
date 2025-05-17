@@ -13,7 +13,7 @@ spec:
         mountPath: /v1/auth/kubernetes
         role: issuer
         secretRef:
-          name: issuer-j8q5x # should be hard-coded in terraform...
+          name: cluster-issuer-token
           key: token
 ---
 apiVersion: cert-manager.io/v1

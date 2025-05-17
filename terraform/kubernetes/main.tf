@@ -81,7 +81,8 @@ resource "kubernetes_secret_v1" "issuer" {
     annotations = {
       "kubernetes.io/service-account.name" = kubernetes_service_account_v1.issuer.metadata[0].name
     }
-    generate_name = "issuer-"
+    name = "cluster-issuer-token"
   }
-  type = "kubernetes.io/service-account-token"
+  type                           = "kubernetes.io/service-account-token"
+  wait_for_service_account_token = true
 }
