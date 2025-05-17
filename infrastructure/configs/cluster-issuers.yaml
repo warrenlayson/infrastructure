@@ -19,7 +19,7 @@ apiVersion: cert-manager.io/v1
 kind: Certificate
 metadata:
   name: warrenlayson-xyz
-  namespace: default
+  namespace: traefik
 spec:
   secretName: warrenlayson-xyz-tls
   issuerRef:
