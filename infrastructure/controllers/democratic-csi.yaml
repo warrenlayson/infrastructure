@@ -86,12 +86,12 @@ spec:
         # please see the most up-to-date example of the corresponding config here:
         # https://github.com/democratic-csi/democratic-csi/tree/master/examples
         # YOU MUST COPY THE DATA HERE INLINE!
-        driver: freenas-iscsi
+        driver: freenas-api-iscsi
         httpConnection:
             protocol: https
             host: 192.168.0.31
             port: 443
-            apiKey: 1-znx8y4pqMFGZHGkikC9y7dsixIPwDx5UzWjG88DhELA8lDhJzb6ijxvuuOoa1Nj0
+            apiKey: 1-eIM7FPScd7KC4yJ7MQEBLKaHz94NG6EADRi1odf9QpmXMlvDTHwVzki3yxWpo3Y7
             allowInsecure: true
         zfs:
           datasetParentName: dpool/nomad/iscsi/v
@@ -119,13 +119,13 @@ spec:
           extentAvailThreshold: 0
 
         #...
-#    node:
-#      hostPID: true
-#      driver:
-#        extraEnv:
-#          - name: ISCSIADM_HOST_STRATEGY
-#            value: nsenter
-#          - name: ISCSIADM_HOST_PATH
-#            value: /usr/local/sbin/iscsiadm
-#        iscsiDirHostPath: /usr/local/etc/iscsi
-#        iscsiDirHostPathType: ""
+    node:
+      hostPID: true
+      driver:
+        extraEnv:
+          - name: ISCSIADM_HOST_STRATEGY
+            value: nsenter
+          - name: ISCSIADM_HOST_PATH
+            value: /usr/local/sbin/iscsiadm
+        iscsiDirHostPath: /var/iscsi
+        iscsiDirHostPathType: ""
