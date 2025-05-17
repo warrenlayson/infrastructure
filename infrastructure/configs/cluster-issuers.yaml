@@ -7,14 +7,13 @@ metadata:
 spec:
   vault:
     server: http://192.168.0.60:8200
-    path: pki/sign/warrenlayson-dot-xyz
+    path: pki_int/sign/warrenlayson-dot-xyz
     auth:
       kubernetes:
+        role: vault-issuer-role
         mountPath: /v1/auth/kubernetes
-        role: issuer
-        secretRef:
-          name: cluster-issuer-token
-          key: token
+        serviceAccountRef:
+          name: vault-issuer
 ---
 apiVersion: cert-manager.io/v1
 kind: Certificate
