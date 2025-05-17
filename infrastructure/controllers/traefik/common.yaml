@@ -63,7 +63,6 @@ spec:
     providers:
       kubernetesCRD:
         ingressClass: traefik-internal
-        asDefaultClass: true
     service:
       loadBalancerIP: "192.168.0.240"
 ---
