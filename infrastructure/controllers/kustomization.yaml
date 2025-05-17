@@ -3,3 +3,4 @@ kind: Kustomization
 resources:
   - democratic-csi.yaml
   - cert-manager.yaml
+  - traefik.yaml
