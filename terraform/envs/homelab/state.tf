@@ -1,7 +1,7 @@
 terraform {
   backend "s3" {
     bucket = "terraform"
-    key    = "kubernetes/terraform.tfstate"
+    key    = "envs/homelab/terraform.tfstate"
     region = "ap-southeast-2"
 
     skip_region_validation      = true

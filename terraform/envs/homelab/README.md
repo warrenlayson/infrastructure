@@ -23,7 +23,7 @@
 
 | Name | Source | Version |
 |------|--------|---------|
-| <a name="module_talos"></a> [talos](#module\_talos) | ../modules/talos | n/a |
+| <a name="module_talos"></a> [talos](#module\_talos) | ../../modules/talos | n/a |
 
 ## Resources
 

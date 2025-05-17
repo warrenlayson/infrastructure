@@ -1,6 +1,6 @@
 
 module "talos" {
-  source = "../modules/talos"
+  source = "../../modules/talos"
   providers = {
     proxmox = proxmox
     talos   = talos
