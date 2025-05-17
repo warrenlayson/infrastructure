@@ -63,8 +63,7 @@ spec:
     providers:
       kubernetesCRD:
         ingressClass: traefik-internal
-    service:
-      loadBalancerIP: "192.168.0.240"
+
 ---
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
@@ -88,5 +87,4 @@ spec:
     providers:
       kubernetesCRD:
         ingressClass: traefik-external
-    service:
-      loadBalancerIP: "192.168.0.241"
+
