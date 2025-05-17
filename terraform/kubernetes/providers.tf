@@ -19,6 +19,11 @@ terraform {
       source  = "hashicorp/local"
       version = "2.5.2"
     }
+
+    kubernetes = {
+      source  = "hashicorp/kubernetes"
+      version = "2.36.0"
+    }
   }
 }
 
@@ -37,14 +42,24 @@ provider "proxmox" {
 provider "talos" {
 
 }
-
-provider "flux" {
-  kubernetes = {
+locals {
+  kubernetes_config = {
     host                   = module.talos.kube_config.kubernetes_client_configuration.host
     client_certificate     = base64decode(module.talos.kube_config.kubernetes_client_configuration.client_certificate)
     client_key             = base64decode(module.talos.kube_config.kubernetes_client_configuration.client_key)
     cluster_ca_certificate = base64decode(module.talos.kube_config.kubernetes_client_configuration.ca_certificate)
   }
+}
+
+provider "kubernetes" {
+  host                   = local.kubernetes_config.host
+  client_certificate     = local.kubernetes_config.client_certificate
+  client_key             = local.kubernetes_config.client_key
+  cluster_ca_certificate = local.kubernetes_config.cluster_ca_certificate
+}
+
+provider "flux" {
+  kubernetes = local.kubernetes_config
   git = {
     url = "ssh://git@github.com/${var.github_org}/${var.github_repository}.git"
     ssh = {

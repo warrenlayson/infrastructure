@@ -18,11 +18,16 @@ resource "local_file" "kube_config" {
 }
 
 output "kube_config" {
-  value     = module.talos.kube_config.kubeconfig_raw
+  value     = module.talos.kube_config
   sensitive = true
 }
 
 output "talos_config" {
   value     = module.talos.client_configuration.talos_config
+  sensitive = true
+}
+
+output "vault_auth_secret" {
+  value     = kubernetes_secret_v1.vault-auth
   sensitive = true
 }
