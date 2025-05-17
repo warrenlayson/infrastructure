@@ -51,13 +51,13 @@ ports:
     expose:
       default: true
   private-web:
-    port: 8000
+    port: 6000
     expose:
       default: false
       internal: true
     exposedPort: 80
   private-websecure:
-    port: 8443
+    port: 6443
     expose:
       default: false
       internal: true
