@@ -1,0 +1,31 @@
+---
+apiVersion: cert-manager.io/v1
+kind: ClusterIssuer
+metadata:
+  name: vault-issuer
+  namespace: default
+spec:
+  vault:
+    server: http://192.168.0.60:8200
+    path: pki/sign/warrenlayson-dot-xyz
+    auth:
+      kubernetes:
+        mountPath: /v1/auth/kubernetes
+        role: issuer
+        secretRef:
+          name: issuer-j8q5x # should be hard-coded in terraform...
+          key: token
+---
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: warrenlayson-xyz
+  namespace: default
+spec:
+  secretName: warrenlayson-xyz-tls
+  issuerRef:
+    name: vault-issuer
+  commonName: "*.warrenlayson.xyz"
+  dnsNames:
+    - "warrenlayson.xyz"
+    - "*.warrenlayson.xyz"
