@@ -63,7 +63,7 @@ spec:
     providers:
       kubernetesCRD:
         ingressClass: traefik-internal
-
+        asDefaultClass: true
 ---
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
