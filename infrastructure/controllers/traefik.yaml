@@ -13,20 +13,30 @@ spec:
   interval: 24h0m0s
   url: https://traefik.github.io/charts
 ---
-apiVersion: helm.toolkit.fluxcd.io/v2
-kind: HelmRelease
+apiVersion: source.toolkit.fluxcd.io/v1
+kind: HelmChart
 metadata:
   name: traefik
   namespace: traefik
 spec:
-  chart:
-    spec:
-      chart: traefik
-      reconcileStrategy: ChartVersion
-      sourceRef:
-        kind: HelmRepository
-        name: traefik
-        namespace: traefik
+  interval: 12h
+  chart: traefik
+  reconcileVersion: ChartVersion
+  sourceRef:
+    kind: HelmRepository
+    name: traefik
+  version: '35.*'
+---
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: traefik-external
+  namespace: traefik
+spec:
+  chartRef:
+    kind: HelmChart
+    name: traefik
+    namespace: traefik
   interval: 12h0m0s
   values:
     additionalArguments:
@@ -36,22 +46,13 @@ spec:
       dashboard:
         enabled: false
     ports:
-      http:
+      web:
         redirections:
           entryPoint:
-            to: https
+            to: websecure
             scheme: https
             permanent: true
-      https:
-        tls:
-          enabled: true
-      http-external:
-        redirections:
-          entryPoint:
-            to: https-external
-            scheme: https
-            permanent: true
-      https-external:
+      websecure:
         tls:
           enabled: true
       rbac:
@@ -66,3 +67,46 @@ spec:
       service:
         enabled: true
         type: LoadBalancer
+        loadBalancerIP: "192.168.0.81"
+---
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: traefik
+  namespace: traefik
+spec:
+  chartRef:
+    kind: HelmChart
+    name: traefik
+    namespace: traefik
+  interval: 12h0m0s
+  values:
+    additionalArguments:
+      - "--serversTransport.insecureSkipVerify=true"
+      - "--log.level=DEBUG"
+    ingressRoute:
+      dashboard:
+        enabled: false
+    ports:
+      web:
+        redirections:
+          entryPoint:
+            to: websecure
+            scheme: https
+            permanent: true
+      websecure:
+        tls:
+          enabled: true
+      rbac:
+        enabled: true
+      providers:
+        kubernetesCRD:
+          enabled: true
+        kubernetesIngress:
+          enabled: true
+          publishedService:
+            enabled: false
+      service:
+        enabled: true
+        type: LoadBalancer
+        loadBalancerIP: "192.168.0.80"
