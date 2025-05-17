@@ -98,6 +98,8 @@ resource "vault_pki_secret_backend_role" "intermediate_role" {
   allow_subdomains = true
 }
 
+
+
 resource "vault_auth_backend" "kubernetes" {
   type = "kubernetes"
 }
@@ -110,3 +112,11 @@ resource "vault_kubernetes_auth_backend_config" "kubernetes" {
   token_reviewer_jwt = data.terraform_remote_state.kubernetes.outputs.vault_auth_secret.data.token
 }
 
+resource "vault_kubernetes_auth_backend_role" "issuer" {
+  backend                          = vault_auth_backend.kubernetes.path
+  role_name                        = "issuer"
+  bound_service_account_names      = [data.terraform_remote_state.kubernetes.outputs.issuer_service_account.metadata[0].name]
+  bound_service_account_namespaces = [data.terraform_remote_state.kubernetes.outputs.issuer_service_account.metadata[0].namespace]
+  token_policies                   = [vault_policy.pki.name]
+  token_ttl                        = 60 * 20
+}
