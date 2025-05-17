@@ -24,7 +24,6 @@ spec:
   sourceRef:
     kind: HelmRepository
     name: traefik
-    namespace: traefik
   version: '35.*'
 ---
 apiVersion: helm.toolkit.fluxcd.io/v2
