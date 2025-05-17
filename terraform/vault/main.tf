@@ -86,16 +86,18 @@ resource "vault_pki_secret_backend_issuer" "intermediate" {
 }
 
 resource "vault_pki_secret_backend_role" "intermediate_role" {
-  backend          = vault_mount.pki_int.path
-  issuer_ref       = vault_pki_secret_backend_issuer.intermediate.issuer_ref
-  name             = "warrenlayson-dot-xyz"
-  ttl              = 86400
-  max_ttl          = 2592000
-  allow_ip_sans    = true
-  key_type         = "rsa"
-  key_bits         = 4096
-  allowed_domains  = ["warrenlayson.xyz"]
-  allow_subdomains = true
+  backend                     = vault_mount.pki_int.path
+  issuer_ref                  = vault_pki_secret_backend_issuer.intermediate.issuer_ref
+  name                        = "warrenlayson-dot-xyz"
+  ttl                         = 86400
+  max_ttl                     = 2592000
+  allow_ip_sans               = true
+  key_type                    = "rsa"
+  key_bits                    = 2048
+  allowed_domains             = ["warrenlayson.xyz"]
+  allow_bare_domains          = true
+  allow_wildcard_certificates = true
+  allow_subdomains            = true
 }
 
 locals {
