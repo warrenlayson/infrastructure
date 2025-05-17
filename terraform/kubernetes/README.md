@@ -31,10 +31,13 @@
 |------|------|
 | [flux_bootstrap_git.this](https://registry.terraform.io/providers/fluxcd/flux/1.5.1/docs/resources/bootstrap_git) | resource |
 | [kubernetes_cluster_role_binding_v1.role-tokenreview-binding](https://registry.terraform.io/providers/hashicorp/kubernetes/2.36.0/docs/resources/cluster_role_binding_v1) | resource |
-| [kubernetes_secret_v1.issuer](https://registry.terraform.io/providers/hashicorp/kubernetes/2.36.0/docs/resources/secret_v1) | resource |
+| [kubernetes_role_binding_v1.vault-issuer](https://registry.terraform.io/providers/hashicorp/kubernetes/2.36.0/docs/resources/role_binding_v1) | resource |
+| [kubernetes_role_v1.vault-issuer](https://registry.terraform.io/providers/hashicorp/kubernetes/2.36.0/docs/resources/role_v1) | resource |
 | [kubernetes_secret_v1.vault-auth](https://registry.terraform.io/providers/hashicorp/kubernetes/2.36.0/docs/resources/secret_v1) | resource |
-| [kubernetes_service_account_v1.issuer](https://registry.terraform.io/providers/hashicorp/kubernetes/2.36.0/docs/resources/service_account_v1) | resource |
+| [kubernetes_secret_v1.vault-issuer](https://registry.terraform.io/providers/hashicorp/kubernetes/2.36.0/docs/resources/secret_v1) | resource |
 | [kubernetes_service_account_v1.vault-auth](https://registry.terraform.io/providers/hashicorp/kubernetes/2.36.0/docs/resources/service_account_v1) | resource |
+| [kubernetes_service_account_v1.vault-issuer](https://registry.terraform.io/providers/hashicorp/kubernetes/2.36.0/docs/resources/service_account_v1) | resource |
+| [local_file.kube_ca_cert](https://registry.terraform.io/providers/hashicorp/local/2.5.2/docs/resources/file) | resource |
 | [local_file.kube_config](https://registry.terraform.io/providers/hashicorp/local/2.5.2/docs/resources/file) | resource |
 | [local_file.machine_configs](https://registry.terraform.io/providers/hashicorp/local/2.5.2/docs/resources/file) | resource |
 | [local_file.talos_config](https://registry.terraform.io/providers/hashicorp/local/2.5.2/docs/resources/file) | resource |
@@ -51,8 +54,8 @@
 
 | Name | Description |
 |------|-------------|
-| <a name="output_issuer_service_account"></a> [issuer\_service\_account](#output\_issuer\_service\_account) | n/a |
 | <a name="output_kube_config"></a> [kube\_config](#output\_kube\_config) | n/a |
 | <a name="output_talos_config"></a> [talos\_config](#output\_talos\_config) | n/a |
+| <a name="output_vault-issuer-serviceaccount"></a> [vault-issuer-serviceaccount](#output\_vault-issuer-serviceaccount) | n/a |
 | <a name="output_vault_auth_secret"></a> [vault\_auth\_secret](#output\_vault\_auth\_secret) | n/a |
 <!-- END_TF_DOCS -->

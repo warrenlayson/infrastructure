@@ -70,19 +70,50 @@ resource "kubernetes_secret_v1" "vault-auth" {
   type = "kubernetes.io/service-account-token"
 }
 
-resource "kubernetes_service_account_v1" "issuer" {
+resource "kubernetes_service_account_v1" "vault-issuer" {
   metadata {
-    name = "issuer"
+    name = "vault-issuer"
   }
 }
 
-resource "kubernetes_secret_v1" "issuer" {
+resource "kubernetes_secret_v1" "vault-issuer" {
   metadata {
     annotations = {
-      "kubernetes.io/service-account.name" = kubernetes_service_account_v1.issuer.metadata[0].name
+      "kubernetes.io/service-account.name" = kubernetes_service_account_v1.vault-issuer.metadata[0].name
     }
-    name = "cluster-issuer-token"
+    name      = "cluster-issuer-token"
+    namespace = kubernetes_service_account_v1.vault-issuer.metadata[0].namespace
   }
   type                           = "kubernetes.io/service-account-token"
   wait_for_service_account_token = true
+}
+
+resource "kubernetes_role_v1" "vault-issuer" {
+  metadata {
+    name      = kubernetes_service_account_v1.vault-issuer.metadata[0].name
+    namespace = kubernetes_service_account_v1.vault-issuer.metadata[0].namespace
+  }
+  rule {
+    api_groups     = [""]
+    resources      = ["serviceaccounts/token"]
+    resource_names = ["vault-issuer"]
+    verbs          = ["create"]
+  }
+}
+
+resource "kubernetes_role_binding_v1" "vault-issuer" {
+  metadata {
+    name      = kubernetes_service_account_v1.vault-issuer.metadata[0].name
+    namespace = kubernetes_service_account_v1.vault-issuer.metadata[0].namespace
+  }
+  subject {
+    kind      = "ServiceAccount"
+    name      = "cert-manager"
+    namespace = "cert-manager"
+  }
+  role_ref {
+    api_group = "rbac.authorization.k8s.io"
+    kind      = "Role"
+    name      = kubernetes_role_v1.vault-issuer.metadata[0].name
+  }
 }

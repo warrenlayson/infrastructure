@@ -27,7 +27,7 @@ No modules.
 | [local_file.intermediate_ca_cert](https://registry.terraform.io/providers/hashicorp/local/2.5.3/docs/resources/file) | resource |
 | [vault_auth_backend.kubernetes](https://registry.terraform.io/providers/hashicorp/vault/4.8.0/docs/resources/auth_backend) | resource |
 | [vault_kubernetes_auth_backend_config.kubernetes](https://registry.terraform.io/providers/hashicorp/vault/4.8.0/docs/resources/kubernetes_auth_backend_config) | resource |
-| [vault_kubernetes_auth_backend_role.issuer](https://registry.terraform.io/providers/hashicorp/vault/4.8.0/docs/resources/kubernetes_auth_backend_role) | resource |
+| [vault_kubernetes_auth_backend_role.vault-issuer](https://registry.terraform.io/providers/hashicorp/vault/4.8.0/docs/resources/kubernetes_auth_backend_role) | resource |
 | [vault_mount.pki](https://registry.terraform.io/providers/hashicorp/vault/4.8.0/docs/resources/mount) | resource |
 | [vault_mount.pki_int](https://registry.terraform.io/providers/hashicorp/vault/4.8.0/docs/resources/mount) | resource |
 | [vault_pki_secret_backend_config_urls.config-urls](https://registry.terraform.io/providers/hashicorp/vault/4.8.0/docs/resources/pki_secret_backend_config_urls) | resource |

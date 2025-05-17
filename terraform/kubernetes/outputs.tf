@@ -17,6 +17,11 @@ resource "local_file" "kube_config" {
   file_permission = "0600"
 }
 
+resource "local_file" "kube_ca_cert" {
+  content_base64 = module.talos.kube_config.kubernetes_client_configuration.ca_certificate
+  filename       = "${path.module}/outputs/kube-ca.crt"
+}
+
 output "kube_config" {
   value     = module.talos.kube_config
   sensitive = true
@@ -32,6 +37,6 @@ output "vault_auth_secret" {
   sensitive = true
 }
 
-output "issuer_service_account" {
-  value = kubernetes_service_account_v1.issuer
+output "vault-issuer-serviceaccount" {
+  value = kubernetes_service_account_v1.vault-issuer
 }

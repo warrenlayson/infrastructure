@@ -98,7 +98,14 @@ resource "vault_pki_secret_backend_role" "intermediate_role" {
   allow_subdomains = true
 }
 
-
+locals {
+  kube_config                 = data.terraform_remote_state.kubernetes.outputs.kube_config
+  vault_issuer_serviceaccount = data.terraform_remote_state.kubernetes.outputs.vault-issuer-serviceaccount
+  vault_issuer_sa = {
+    name      = local.vault_issuer_serviceaccount.metadata[0].name
+    namespace = local.vault_issuer_serviceaccount.metadata[0].namespace
+  }
+}
 
 resource "vault_auth_backend" "kubernetes" {
   type = "kubernetes"
@@ -106,17 +113,17 @@ resource "vault_auth_backend" "kubernetes" {
 
 resource "vault_kubernetes_auth_backend_config" "kubernetes" {
   backend            = vault_auth_backend.kubernetes.path
-  kubernetes_host    = data.terraform_remote_state.kubernetes.outputs.kube_config.kubernetes_client_configuration.host
-  kubernetes_ca_cert = base64decode(data.terraform_remote_state.kubernetes.outputs.kube_config.kubernetes_client_configuration.ca_certificate)
-
+  kubernetes_host    = local.kube_config.kubernetes_client_configuration.host
+  kubernetes_ca_cert = base64decode(local.kube_config.kubernetes_client_configuration.ca_certificate)
   token_reviewer_jwt = data.terraform_remote_state.kubernetes.outputs.vault_auth_secret.data.token
 }
 
-resource "vault_kubernetes_auth_backend_role" "issuer" {
+resource "vault_kubernetes_auth_backend_role" "vault-issuer" {
   backend                          = vault_auth_backend.kubernetes.path
-  role_name                        = "issuer"
-  bound_service_account_names      = [data.terraform_remote_state.kubernetes.outputs.issuer_service_account.metadata[0].name]
-  bound_service_account_namespaces = [data.terraform_remote_state.kubernetes.outputs.issuer_service_account.metadata[0].namespace]
+  role_name                        = "vault-issuer-role"
+  bound_service_account_names      = [local.vault_issuer_sa.name]
+  bound_service_account_namespaces = [local.vault_issuer_sa.namespace]
   token_policies                   = [vault_policy.pki.name]
+  audience                         = "vault://vault-issuer"
   token_ttl                        = 60 * 20
 }
