@@ -1,0 +1,16 @@
+providers:
+  kubernetesCRD:
+    enabled: true
+  kubernetesIngress:
+    enabled: true
+    publishedService:
+      enabled: false
+service:
+  enabled: true
+  type: LoadBalancer
+rbac:
+  enabled: true
+
+ingressRoute:
+  dashboard:
+    enabled: false

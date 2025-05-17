@@ -53,15 +53,15 @@ spec:
     namespace: traefik
   interval: 30m
   install:
-    crds: skip
+    crds: Skip
   upgrade:
-    crds: skip
+    crds: Skip
   valuesFrom:
   - kind: ConfigMap
     name: traefik-values
   values:
     providers:
-      kubeternetesCRD:
+      kubernetesCRD:
         ingressClass: traefik-internal
         asDefaultClass: true
     service:
@@ -70,7 +70,7 @@ spec:
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
-  name: traefik-internal
+  name: traefik-external
   namespace: traefik
 spec:
   chartRef:
@@ -79,15 +79,15 @@ spec:
     namespace: traefik
   interval: 30m
   install:
-    crds: skip
+    crds: Skip
   upgrade:
-    crds: skip
+    crds: Skip
   valuesFrom:
   - kind: ConfigMap
     name: traefik-values
   values:
     providers:
-      kubeternetesCRD:
-        ingressClass: traefik-internal
+      kubernetesCRD:
+        ingressClass: traefik-external
     service:
       loadBalancerIP: "192.168.0.241"
