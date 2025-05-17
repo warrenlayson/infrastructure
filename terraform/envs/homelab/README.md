@@ -14,8 +14,6 @@
 
 | Name | Version |
 |------|---------|
-| <a name="provider_flux"></a> [flux](#provider\_flux) | 1.5.1 |
-| <a name="provider_kubernetes"></a> [kubernetes](#provider\_kubernetes) | 2.36.0 |
 | <a name="provider_local"></a> [local](#provider\_local) | 2.5.2 |
 | <a name="provider_terraform"></a> [terraform](#provider\_terraform) | n/a |
 
@@ -23,20 +21,15 @@
 
 | Name | Source | Version |
 |------|--------|---------|
+| <a name="module_cert_manager"></a> [cert\_manager](#module\_cert\_manager) | ./bootstrap/cert_manager | n/a |
+| <a name="module_fluxcd"></a> [fluxcd](#module\_fluxcd) | ./bootstrap/fluxcd | n/a |
 | <a name="module_talos"></a> [talos](#module\_talos) | ../../modules/talos | n/a |
+| <a name="module_vault"></a> [vault](#module\_vault) | ./bootstrap/vault | n/a |
 
 ## Resources
 
 | Name | Type |
 |------|------|
-| [flux_bootstrap_git.this](https://registry.terraform.io/providers/fluxcd/flux/1.5.1/docs/resources/bootstrap_git) | resource |
-| [kubernetes_cluster_role_binding_v1.role-tokenreview-binding](https://registry.terraform.io/providers/hashicorp/kubernetes/2.36.0/docs/resources/cluster_role_binding_v1) | resource |
-| [kubernetes_cluster_role_binding_v1.vault-issuer](https://registry.terraform.io/providers/hashicorp/kubernetes/2.36.0/docs/resources/cluster_role_binding_v1) | resource |
-| [kubernetes_cluster_role_v1.vault-issuer](https://registry.terraform.io/providers/hashicorp/kubernetes/2.36.0/docs/resources/cluster_role_v1) | resource |
-| [kubernetes_secret_v1.vault-auth](https://registry.terraform.io/providers/hashicorp/kubernetes/2.36.0/docs/resources/secret_v1) | resource |
-| [kubernetes_secret_v1.vault-issuer](https://registry.terraform.io/providers/hashicorp/kubernetes/2.36.0/docs/resources/secret_v1) | resource |
-| [kubernetes_service_account_v1.vault-auth](https://registry.terraform.io/providers/hashicorp/kubernetes/2.36.0/docs/resources/service_account_v1) | resource |
-| [kubernetes_service_account_v1.vault-issuer](https://registry.terraform.io/providers/hashicorp/kubernetes/2.36.0/docs/resources/service_account_v1) | resource |
 | [local_file.kube_ca_cert](https://registry.terraform.io/providers/hashicorp/local/2.5.2/docs/resources/file) | resource |
 | [local_file.kube_config](https://registry.terraform.io/providers/hashicorp/local/2.5.2/docs/resources/file) | resource |
 | [local_file.machine_configs](https://registry.terraform.io/providers/hashicorp/local/2.5.2/docs/resources/file) | resource |

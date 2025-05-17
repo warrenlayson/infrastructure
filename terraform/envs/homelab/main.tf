@@ -32,87 +32,69 @@ module "talos" {
   }
 }
 
-resource "flux_bootstrap_git" "this" {
-  depends_on         = [module.talos]
-  embedded_manifests = true
-  path               = "clusters/homelab"
+module "fluxcd" {
+  depends_on = [module.talos]
+  source     = "./bootstrap/fluxcd"
+  providers = {
+    flux = flux
+  }
+  cluster_path = "clusters/homelab"
 }
 
-resource "kubernetes_service_account_v1" "vault-auth" {
-  metadata {
-    name = "vault-auth"
-  }
+moved {
+  from = flux_bootstrap_git.this
+  to   = module.fluxcd.flux_bootstrap_git.this
 }
 
-resource "kubernetes_cluster_role_binding_v1" "role-tokenreview-binding" {
-  metadata {
-    name = "role-tokenreview-binding"
-  }
-  role_ref {
-    api_group = "rbac.authorization.k8s.io"
-    kind      = "ClusterRole"
-    name      = "system:auth-delegator"
-  }
-  subject {
-    kind = "ServiceAccount"
-    name = kubernetes_service_account_v1.vault-auth.metadata[0].name
+
+module "vault" {
+  depends_on = [module.talos]
+  source     = "./bootstrap/vault"
+  providers = {
+    kubernetes = kubernetes
   }
 }
 
-resource "kubernetes_secret_v1" "vault-auth" {
-  metadata {
-    annotations = {
-      "kubernetes.io/service-account.name" = kubernetes_service_account_v1.vault-auth.metadata[0].name
-    }
-    generate_name = "vault-auth-"
-  }
-
-  type = "kubernetes.io/service-account-token"
+moved {
+  from = kubernetes_service_account_v1.vault-auth
+  to   = module.vault.kubernetes_service_account_v1.vault-auth
 }
 
-resource "kubernetes_service_account_v1" "vault-issuer" {
-  metadata {
-    name      = "vault-issuer"
-    namespace = "cert-manager"
-  }
+moved {
+  from = kubernetes_cluster_role_binding_v1.role-tokenreview-binding
+  to   = module.vault.kubernetes_cluster_role_binding_v1.role-tokenreview-binding
 }
 
-resource "kubernetes_secret_v1" "vault-issuer" {
-  metadata {
-    annotations = {
-      "kubernetes.io/service-account.name" = kubernetes_service_account_v1.vault-issuer.metadata[0].name
-    }
-    name      = "cluster-issuer-token"
-    namespace = kubernetes_service_account_v1.vault-issuer.metadata[0].namespace
-  }
-  type                           = "kubernetes.io/service-account-token"
-  wait_for_service_account_token = true
+moved {
+  from = kubernetes_secret_v1.vault-auth
+  to   = module.vault.kubernetes_secret_v1.vault-auth
 }
 
-resource "kubernetes_cluster_role_v1" "vault-issuer" {
-  metadata {
-    name = kubernetes_service_account_v1.vault-issuer.metadata[0].name
-  }
-  rule {
-    api_groups     = [""]
-    resources      = ["serviceaccounts/token"]
-    resource_names = ["vault-issuer"]
-    verbs          = ["create"]
+
+module "cert_manager" {
+  depends_on = [module.talos]
+  source     = "./bootstrap/cert_manager"
+  providers = {
+    kubernetes = kubernetes
   }
 }
 
-resource "kubernetes_cluster_role_binding_v1" "vault-issuer" {
-  metadata {
-    name = kubernetes_service_account_v1.vault-issuer.metadata[0].name
-  }
-  subject {
-    kind      = "ServiceAccount"
-    name      = "cert-manager"
-    namespace = "cert-manager"
-  }
-  role_ref {
-    api_group = "rbac.authorization.k8s.io"
-    kind      = "ClusterRole"
-    name      = kubernetes_cluster_role_v1.vault-issuer.metadata[0].name
-  }
+moved {
+  from = kubernetes_service_account_v1.vault-issuer
+  to   = module.cert_manager.kubernetes_service_account_v1.vault-issuer
+}
+
+moved {
+  from = kubernetes_secret_v1.vault-issuer
+  to   = module.cert_manager.kubernetes_secret_v1.vault-issuer
+}
+
+moved {
+  from = kubernetes_cluster_role_v1.vault-issuer
+  to   = module.cert_manager.kubernetes_cluster_role_v1.vault-issuer
+}
+
+moved {
+  from = kubernetes_cluster_role_binding_v1.vault-issuer
+  to   = module.cert_manager.kubernetes_cluster_role_binding_v1.vault-issuer
 }

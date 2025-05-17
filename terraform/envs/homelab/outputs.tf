@@ -33,10 +33,10 @@ output "talos_config" {
 }
 
 output "vault_auth_secret" {
-  value     = kubernetes_secret_v1.vault-auth
+  value     = module.vault.vault_auth_secret
   sensitive = true
 }
 
 output "vault-issuer-serviceaccount" {
-  value = kubernetes_service_account_v1.vault-issuer
+  value = module.cert_manager.vault-issuer-serviceaccount
 }
