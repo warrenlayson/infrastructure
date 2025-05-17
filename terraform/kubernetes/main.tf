@@ -69,3 +69,19 @@ resource "kubernetes_secret_v1" "vault-auth" {
 
   type = "kubernetes.io/service-account-token"
 }
+
+resource "kubernetes_service_account_v1" "issuer" {
+  metadata {
+    name = "issuer"
+  }
+}
+
+resource "kubernetes_secret_v1" "issuer" {
+  metadata {
+    annotations = {
+      "kubernetes.io/service-account.name" = kubernetes_service_account_v1.issuer.metadata[0].name
+    }
+    generate_name = "issuer-"
+  }
+  type = "kubernetes.io/service-account-token"
+}

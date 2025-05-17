@@ -31,3 +31,7 @@ output "vault_auth_secret" {
   value     = kubernetes_secret_v1.vault-auth
   sensitive = true
 }
+
+output "issuer_service_account" {
+  value = kubernetes_service_account_v1.issuer
+}
