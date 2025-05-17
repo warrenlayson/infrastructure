@@ -13,4 +13,4 @@ spec:
       - name: grafana
         port: 80
   tls:
-    secretName: warrenlayson-xyz-tls
+    secretName: warrenlayson-xyz
