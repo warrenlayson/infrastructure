@@ -67,3 +67,16 @@ resource "vault_pki_secret_backend_intermediate_set_signed" "intermediate" {
   backend     = vault_mount.pki_int.path
   certificate = vault_pki_secret_backend_root_sign_intermediate.intermediate.certificate
 }
+
+resource "vault_auth_backend" "kubernetes" {
+  type = "kubernetes"
+}
+
+resource "vault_kubernetes_auth_backend_config" "kubernetes" {
+  backend            = vault_auth_backend.kubernetes.path
+  kubernetes_host    = data.terraform_remote_state.kubernetes.outputs.kube_config.kubernetes_client_configuration.host
+  kubernetes_ca_cert = base64decode(data.terraform_remote_state.kubernetes.outputs.kube_config.kubernetes_client_configuration.ca_certificate)
+
+  token_reviewer_jwt = data.terraform_remote_state.kubernetes.outputs.vault_auth_secret.data.token
+}
+
