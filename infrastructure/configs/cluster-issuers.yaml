@@ -25,6 +25,7 @@ spec:
   secretName: warrenlayson-xyz-tls
   issuerRef:
     name: vault-issuer
+    kind: ClusterIssuer
   commonName: "*.warrenlayson.xyz"
   dnsNames:
     - "warrenlayson.xyz"
