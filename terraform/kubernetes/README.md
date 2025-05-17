@@ -31,8 +31,8 @@
 |------|------|
 | [flux_bootstrap_git.this](https://registry.terraform.io/providers/fluxcd/flux/1.5.1/docs/resources/bootstrap_git) | resource |
 | [kubernetes_cluster_role_binding_v1.role-tokenreview-binding](https://registry.terraform.io/providers/hashicorp/kubernetes/2.36.0/docs/resources/cluster_role_binding_v1) | resource |
-| [kubernetes_role_binding_v1.vault-issuer](https://registry.terraform.io/providers/hashicorp/kubernetes/2.36.0/docs/resources/role_binding_v1) | resource |
-| [kubernetes_role_v1.vault-issuer](https://registry.terraform.io/providers/hashicorp/kubernetes/2.36.0/docs/resources/role_v1) | resource |
+| [kubernetes_cluster_role_binding_v1.vault-issuer](https://registry.terraform.io/providers/hashicorp/kubernetes/2.36.0/docs/resources/cluster_role_binding_v1) | resource |
+| [kubernetes_cluster_role_v1.vault-issuer](https://registry.terraform.io/providers/hashicorp/kubernetes/2.36.0/docs/resources/cluster_role_v1) | resource |
 | [kubernetes_secret_v1.vault-auth](https://registry.terraform.io/providers/hashicorp/kubernetes/2.36.0/docs/resources/secret_v1) | resource |
 | [kubernetes_secret_v1.vault-issuer](https://registry.terraform.io/providers/hashicorp/kubernetes/2.36.0/docs/resources/secret_v1) | resource |
 | [kubernetes_service_account_v1.vault-auth](https://registry.terraform.io/providers/hashicorp/kubernetes/2.36.0/docs/resources/service_account_v1) | resource |
