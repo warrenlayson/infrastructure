@@ -37,18 +37,20 @@ spec:
         enabled: false
     ports:
       http:
-        redirectTo:
-          port: https
-          permanent: true
-          priority: 10
+        redirections:
+          entryPoint:
+            to: https
+            scheme: https
+            permanent: true
       https:
         tls:
           enabled: true
       http-external:
-        redirectTo:
-          port: https-external
-          permanent: true
-          priority: 10
+        redirections:
+          entryPoint:
+            to: https-external
+            scheme: https
+            permanent: true
       https-external:
         tls:
           enabled: true
