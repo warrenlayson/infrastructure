@@ -62,6 +62,7 @@
             pkgs.kubectl
             pkgs.talosctl
             pkgs.fluxcd
+            pkgs.vault
             (pkgs.wrapHelm pkgs.kubernetes-helm {
               plugins = with pkgs.kubernetes-helmPlugins; [
 
