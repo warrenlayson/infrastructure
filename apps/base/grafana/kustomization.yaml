@@ -6,3 +6,9 @@ resources:
   - repository.yaml
   - release.yaml
   - ingressroute.yaml
+configMapGenerator:
+  - name: grafana-values
+    files:
+      - values.yaml=values.yaml
+configurations:
+  - kustomizeconfig.yaml
