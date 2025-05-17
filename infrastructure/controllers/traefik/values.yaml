@@ -1,3 +1,5 @@
+ingressClass:
+  name: traefik
 providers:
   kubernetesCRD:
     enabled: true
@@ -8,9 +10,37 @@ providers:
 service:
   enabled: true
   type: LoadBalancer
+  loadBalancerIP: "192.168.0.241"
+  additionalServices:
+    cluster:
+      type: ClusterIP
+      labels:
+        traefik-service-label: internal
+    lb:
+      type: LoadBalancer
+      loadBalancerIP: "192.168.0.240"
+      labels:
+        traefik-service-label: internal
 rbac:
   enabled: true
 
 ingressRoute:
   dashboard:
     enabled: false
+
+ports:
+  traefik:
+    expose:
+      default: false
+      internal: true
+  web:
+    redirections:
+      entryPoint:
+        to: websecure
+        scheme: https
+        permanent: true
+
+tlsStore:
+  default:
+    defaultCertificate:
+      secretName: warrenlayson-xyz-tls
