@@ -1,0 +1,66 @@
+---
+apiVersion: secrets.hashicorp.com/v1beta1
+kind: VaultAuth
+metadata:
+  name: static-auth
+  namespace: cert-manager
+spec:
+  method: kubernetes
+  mount: kubernetes
+  kubernetes:
+    role: cert-manager
+    serviceAccount: cert-manager
+    audiences:
+    - vault
+---
+apiVersion: secrets.hashicorp.com/v1beta1
+kind: VaultStaticSecret
+metadata:
+  name: vault-cert-manager
+  namespace: cert-manager
+spec:
+  type: kv-v2
+  mount: kv
+  path: cert-manager/config
+  destination:
+    name: secretkv
+    create: true
+  refreshAfter: 30s
+  vaultAuthRef: static-auth
+---
+apiVersion: cert-manager.io/v1
+kind: ClusterIssuer
+metadata:
+  name: letsencrypt
+  namespace: default
+spec:
+  acme:
+    email: warrenlayson@gmail.com
+    server: https://acme-staging-v02.api.letsencrypt.org/directory
+    privateKeySecretRef:
+      name: letsencrypt
+    solvers:
+    - dns01:
+        cloudflare:
+          email: warrenlayson@gmail.com
+          apiTokenSecretRef:
+            name: secretkv
+            key: cf_api_token
+      selector:
+        dnsZones:
+        - "warrenlayson.xyz"
+---
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: warrenlayson-xyz
+  namespace: traefik
+spec:
+  secretName: warrenlayson-xyz-tls
+  issuerRef:
+    name: letsencrypt
+    kind: ClusterIssuer
+  commonName: "*.warrenlayson.xyz"
+  dnsNames:
+    - "warrenlayson.xyz"
+    - "*.warrenlayson.xyz"
