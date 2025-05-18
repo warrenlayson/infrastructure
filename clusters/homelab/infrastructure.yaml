@@ -21,6 +21,7 @@ spec:
       target:
         kind: HelmRelease
         name: vault-secrets-operator
+        namespace: vault-secrets-operator-system
 ---
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
