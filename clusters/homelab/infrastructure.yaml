@@ -13,6 +13,14 @@ spec:
   path: ./infrastructure/controllers
   prune: true
   wait: true
+  patches:
+    - patch: |
+        - op: replace
+          path: /spec/values/defaultVaultConnection/address
+          value: "http://192.168.0.60:8200"
+      target:
+        kind: HelmRelease
+        name: vault-secrets-operator
 ---
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
