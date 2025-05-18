@@ -32,7 +32,7 @@ spec:
         namespace: vault-secrets-operator-system
   interval: 12h0m0s
   values:
-    defaultValueConnection:
+    defaultVaultConnection:
       enabled: true
       address: "http://vault.vault.csv.cluster.local:8200"
       skipTLSVerify: false
