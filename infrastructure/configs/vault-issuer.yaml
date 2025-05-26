@@ -1,6 +1,6 @@
 ---
 apiVersion: cert-manager.io/v1
-kind: ClusterIssuer
+kind: Issuer
 metadata:
   name: vault-issuer
   namespace: default
@@ -18,14 +18,14 @@ spec:
 apiVersion: cert-manager.io/v1
 kind: Certificate
 metadata:
-  name: warrenlayson-xyz
+  name: cluster-warrenlayson-xyz
   namespace: traefik
 spec:
-  secretName: warrenlayson-xyz-tls
+  secretName: cluster-warrenlayson-xyz-tls
   issuerRef:
     name: vault-issuer
-    kind: ClusterIssuer
-  commonName: "*.warrenlayson.xyz"
+    kind: Issuer
+  commonName: "*.cluster.warrenlayson.xyz"
   dnsNames:
     - "warrenlayson.xyz"
     - "*.warrenlayson.xyz"

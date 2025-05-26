@@ -11,7 +11,7 @@ service:
   enabled: true
   single: true
   type: LoadBalancer
-  loadBalancerSourceRanger:
+  loadBalancerSourceRanges:
     - 0.0.0.0/0
   additionalServices:
     cluster:
