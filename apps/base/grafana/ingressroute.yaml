@@ -5,7 +5,7 @@ metadata:
   namespace: monitoring
 spec:
   entryPoints:
-    - websecure
+    - private-web
   routes:
     - match: Host(`grafana.warrenlayson.xyz`)
       kind: Rule
