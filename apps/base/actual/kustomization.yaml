@@ -4,3 +4,4 @@ namespace: actualbudget
 resources:
   - namespace.yaml
   - release.yaml
+  - ingressroute.yaml
